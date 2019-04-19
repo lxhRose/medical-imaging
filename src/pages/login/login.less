@@ -1,0 +1,78 @@
+.login_wrap {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    .login_content_warp {
+        background: url('./../../assets/login-bg2.jpg') no-repeat;
+        background-size: 100% 100%;
+        height: 100%;
+
+        .login_text_wrap {
+            padding-top: 4%;
+            height: 93%;
+            font-size: 24px;
+            font-family: "HannotateSC-W5";
+            font-weight: Regular;
+            color: #fff;
+
+            h3 {
+                color: #fff;
+            }
+            img {
+                width: 100%;
+            }
+
+            div:first-child {
+                height: 13vw;
+            }
+        }
+        
+        .login_form_warp {
+            position: relative;
+            height: 100%;
+            min-height: 100%;
+            
+            .login_form_box {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                margin-top: -177px;
+                border-radius: 3px;
+                padding: 20px;
+                width: 350px;
+                height: 320px;
+                background-color: #fff;
+
+                .login_form_head {
+                    position: relative;
+                    margin-bottom: 30px;
+
+                    span {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+
+                        a {
+                            padding-right: 5px;
+                        }
+                    }
+                }
+
+                .login_submit_btn {
+                    .ant-form-item-control-wrapper {
+                        margin-top: 25px;
+    
+                        .login-form-button {
+                            width: 100%;
+                        }
+        
+                        .login-form-forgot {
+                            float: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

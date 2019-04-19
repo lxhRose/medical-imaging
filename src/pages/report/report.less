@@ -1,0 +1,236 @@
+.Report-page {
+    margin-top: 50px;
+
+    .content {
+        .scroll {
+            height: 100%;
+            overflow-y: scroll;
+        }
+
+        .left-box, .right-box {
+            position: fixed;
+            border-right: 1px solid #ddd;
+            width: 20%;
+            height: calc(~"100% - 50px");
+            min-height: calc(~"100% - 50px");
+            max-height: calc(~"100% - 50px");
+            background-color: #f5f5f5!important;
+
+            .scroll {
+                padding: 10px 20px;
+            }
+
+            .Search {
+                .ant-input {
+                    border-radius: 20px;
+                }
+                .ant-btn {
+                    border-radius: 20px;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+            }
+
+            .menu-ul {
+                margin-top: 20px;
+                list-style: none;
+
+                li {
+                    cursor: pointer;
+
+                    .title {
+                        padding: 10px 0;
+                        &:hover {
+                            background-color: #e7eef7;
+                        }
+                    }
+
+                    .selected {
+                        background-color: #e7eef7;
+                    }
+
+                    .anticon {
+                        padding: 0 10px;
+                    }
+
+                    .anticon-folder {
+                        padding: 0;
+                        padding-right: 3px;
+                    }
+
+                    .children {
+                        list-style: none;
+                        li {
+                            padding-left: 50px;
+
+                            .anticon {
+                                padding: 0;
+                                padding-right: 3px;
+                            }
+                        }
+                    }
+
+                    .Icon {
+                        display: inline-block;
+                        width: 34px;
+                    }
+                }
+            }
+        }
+
+        .center-box {
+            position: fixed;
+            margin-left: 20%;
+            padding-bottom: 20px;
+            width: 60%;
+            height: calc(~"100% - 50px");
+            min-height: calc(~"100% - 50px");
+            max-height: calc(~"100% - 50px");
+
+            .scroll {
+                padding: 10px 40px;
+            }
+
+            .userInfo {
+                padding: 20px;
+                background-color: #f5f5f5;
+
+                .label {
+                    display: inline-block;
+                    width: 80px;
+                    text-align: right;
+                }
+            }
+
+            .btn-group {
+                text-align: right;
+
+                button {
+                    margin: 20px 10px;
+                    border-radius: 20px;
+                }
+            }
+            .textarea-wrap {
+                padding-bottom: 10px;
+            }
+
+            .yyx {
+                padding: 20px 0;
+
+                .ant-switch {
+                    margin-right: 5px;
+                }
+
+                .right {
+                    float: right;
+                }
+            }
+        }
+
+        .right-box {
+            margin-left: 80%;
+            border-left: 1px solid #ddd;
+            border-right: 0;
+
+            .scroll {
+                padding: 10px 0;
+
+                .ul-menu {
+                    li {
+                        display: inline-block;
+                        border-bottom: 1px solid #ddd;
+                        border-radius: 5px;
+                        padding: 8px 0;
+                        width: 50%;
+                        text-align: center;
+                        cursor: pointer;
+                    }
+                    .activeLeft, .activeRight {
+                        border-top: 1px solid #ddd;
+                        border-right: 1px solid #ddd;
+                        border-bottom: 0;
+                        color: #3273dc;
+                        background-color: #fff;
+                    }
+
+                    .activeRight {
+                        border-right: 0;
+                        border-left: 1px solid #ddd;
+                    }
+                }
+                .leftBox, .rightBox {
+                    overflow-y: scroll;
+                    margin: 0;
+                    padding: 0 10px;
+                    padding-bottom: 10px;
+                    height: 340px;
+                    
+                    li {
+                        span {
+                            display: inline-block;
+                            padding: 10px;
+    
+                            &:first-child {
+                                width: 80px;
+                            }
+                            &:last-child {
+                                width: calc(~"100% - 90px");
+                            }
+                        }
+
+                        &:nth-child(2n + 1) {
+                            background-color: #fff;
+                        }
+                    }
+
+                    .whiteBox {
+                        margin: 10px;
+                    }
+                }
+
+                .whiteBox {
+                    background-color: #fff;
+                    margin: 0;
+                    padding: 40px 20px;
+                    text-align: center;
+                }
+
+                .myRW {
+                    text-align: center;
+
+                    h4 {
+                        background-color: #ddd;
+                        line-height: 40px;
+                        color: #3273dc;
+
+                        .number-box {
+                            display: inline-block;
+                            margin-left: 5px;
+                            border-radius: 50%;
+                            width: 24px;
+                            height: 24px;
+                            line-height: 24px;
+                            background-color: #ffdd57;
+                        }
+                    }
+                    .whiteBox {
+                        margin: 20px;
+                    }
+                }
+            }
+        }
+
+        @media screen and (max-width: 1600px) {
+            .left-box, .right-box {
+                width: 25%;
+            }
+            .center-box {
+                margin-left: 25%;
+                width: 50%;
+            }
+            .right-box {
+                margin-left: 75%;
+            }
+        }
+    }
+}

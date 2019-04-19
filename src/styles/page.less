@@ -1,0 +1,82 @@
+.page {
+  // background: #f0f2f5;
+  // // 覆盖card
+  .page-container {
+    margin: 20px;
+    &.ant-card-wider-padding .ant-card-body {
+      padding: 15px;
+      background: #fff;
+    }
+  }
+
+  .ant-card-bordered {
+    border: 0!important;
+    // background-color: #e8e8e8;
+  }
+
+    // 覆盖antd table的padding
+  .ant-table-tbody > tr > th,
+  .ant-table-tbody > tr > td {
+    padding: 10px;
+    }
+  .table-operation {
+    margin: 10px 0;
+  }
+  .ant-form {
+    .ant-form-item {
+      margin-bottom: 0px;
+      margin-right: 10px;
+      display: flex;
+      > .ant-form-item-label {
+        line-height: 36px;
+        width: 94px;
+      }
+    }
+    .ant-form-item-control-wrapper {
+      flex: 1;
+      min-width: 100px;
+      .ant-form-item-control {
+        line-height: 36px;
+      }
+    }
+  }
+  // 链接高亮
+  .link {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+.center {
+  text-align: center;
+}
+.no-data {
+  text-align: center;
+  margin: 15px 0 25px 0;
+}
+
+.icon-save {
+  font-size: 17px;
+}
+.icon-cancel {
+  font-size: 20px;
+}
+.icon-generate-report {
+  font-size: 20px;
+}
+.text-tip {
+  color: #ff7f08;
+}
+.productkey-select {
+  .ant-select-dropdown-menu-item-selected{
+    font-weight: normal !important;
+  }
+}
+.search_btn {
+  margin-top: 3px;
+  margin-left: 10px;
+}
+.mag20_btn {
+  margin: 20px;
+}
