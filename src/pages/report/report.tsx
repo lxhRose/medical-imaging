@@ -1,33 +1,12 @@
 import React from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
-import { ColumnProps } from 'antd/lib/table';
-import { Table, Menu, Icon } from 'antd';
-import { BadgeProps } from 'antd/lib/badge';
-import {Row, Col, Input, Button, Switch, InputNumber } from 'antd';
+import {Row, Col, Input, Button, Icon } from 'antd';
 import isMobile from './../../utils/isMobile';
 import './report.less';
 
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 const Search = Input.Search;
 const { TextArea } = Input;
-
-const data = [
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-]
 
 interface Props {
     dispatch?: any,
