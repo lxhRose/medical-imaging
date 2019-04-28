@@ -6,7 +6,7 @@ import {fetchExam} from './main-server';
 const initialState = {
     data: [], // 列表
     loading: false,
-    totalRecord: 0,
+    totalRecord: 1,
     pageNumber: 1,
     pageSize: 10,
     visibleModal: false,

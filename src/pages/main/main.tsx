@@ -2,121 +2,13 @@ import React from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
 import { ColumnProps } from 'antd/lib/table';
-import { Table, Menu, Icon } from 'antd';
-import { BadgeProps } from 'antd/lib/badge';
+import { Table, Menu, Icon, List, Pagination} from 'antd';
 import Report from './../report/report';
 import './main.less';
+import isMobile from './../../utils/isMobile';
 
 const {Column} = Table;
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
-
-const data = [
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-    {
-        id: "DR0110580",
-        xm: "WANG PENG CEN JIN 488909",
-        xb: "女",
-        jcnl: "4岁",
-        sblx: "CR",
-        jcbw: "ANKLE",
-        jgmc: "贵航300医院",
-        jcrq: "2019-02-20",
-        scsj: "29 天前",
-        zpdx: "",
-        bgzt: "无报告",
-    },
-]
 
 interface Props {
     dispatch?: any,
@@ -160,7 +52,8 @@ class Main extends React.PureComponent<Props, any> {
         this.state = {
             current: 'alipay',
             showReport: false,
-            option: {}
+            option: {},
+            isMobile: isMobile()
         }
     }
 
@@ -194,17 +87,19 @@ class Main extends React.PureComponent<Props, any> {
 
     // 更改页码
     handleChangePage = (page: number, values?) => {
-        this
-        .props
-        .dispatch({type: 'main/changePage', payload: page});
-        // this.loadList(values); // 页码改变 获取新页列表
+        this.props.dispatch({
+            type: 'main/changePage', 
+            payload: page
+        });
+        this.loadList(); // 页码改变 获取新页列表
     };
 
     // 更改页码大小
     handleChangePageSize = (page: number, pageSize: number) => {
-        this
-        .props
-        .dispatch({type: 'main/changePageSize', payload: pageSize});
+        this.props.dispatch({
+            type: 'main/changePageSize', 
+            payload: pageSize
+        });
         this.handleChangePage(page); // 更每页条数 导致页码改变
     };
 
@@ -233,7 +128,11 @@ class Main extends React.PureComponent<Props, any> {
             totalRecord,
         } = this.props.main;
 
-        const {showReport, option} = this.state;
+        const {
+            showReport,
+            option,
+            isMobile
+        } = this.state;
 
         return(
             <div>
@@ -250,7 +149,7 @@ class Main extends React.PureComponent<Props, any> {
                                 <a>全部影像</a>
                             </Menu.Item>
                             <Menu.Item key="alipay2">
-                                <a>我的任务</a>
+                                <a>我的关注</a>
                             </Menu.Item>
                             <SubMenu title={<span className="submenu-title-wrapper">快捷查询<Icon type="caret-down" /></span>}>
                                 <Menu.Item key="setting:1">今日检查</Menu.Item>
@@ -258,7 +157,69 @@ class Main extends React.PureComponent<Props, any> {
                                 <Menu.Item key="setting:3">今日CT</Menu.Item>
                             </SubMenu>
                         </Menu>
-                        <Table
+                        {isMobile 
+                        ? <div className="Mobile-page">
+                            <p>共 <strong>{data.length}</strong> 条数据</p>
+                            {/* <p>共 <strong>{totalRecord}</strong> 条数据</p> */}
+                            <List
+                                itemLayout="vertical"
+                                size="large"
+                                pagination={{
+                                    onChange: this.handleChangePage,
+                                    pageSize: pageSize,
+                                    total: totalRecord,
+                                    showSizeChanger: true,
+                                    onShowSizeChange: this.handleChangePageSize,
+                                }}
+                                dataSource={data}
+                                renderItem={(item, index) => (
+                                    <div key={index} className="Mobile_list">
+                                        <div className="row">
+                                            <span>ID号</span>
+                                            <span>{item.hospExamExternalId}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span>姓名</span>
+                                            <span>{item.patientName}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span>性别</span>
+                                            <span>{item.patientSex}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span>检查年龄</span>
+                                            <span>{item.patientExamAge}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span>设备类型</span>
+                                            <span>{item.modalityType}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span>检查部位</span>
+                                            <span>{item.examItemName}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span>机构名称</span>
+                                            <span>{item.hospName}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span>检查日期</span>
+                                            <span>{item.examTime}</span>
+                                        </div>
+                                        <div className="row">
+                                            <span>操作</span>
+                                            <span>
+                                                <div className="action">
+                                                    <a><Icon type="picture" />影像</a>
+                                                    <a onClick={() => this.showReport(item)}><Icon type="medicine-box" />报告</a>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
+                            />
+                        </div>
+                        : <Table
                             dataSource={data}
                             rowKey="id"
                             className="myTable"
@@ -294,7 +255,7 @@ class Main extends React.PureComponent<Props, any> {
                                         <a onClick={() => this.showReport(record)}><Icon type="medicine-box" />报告</a>
                                     </div>
                             )}/>
-                        </Table>
+                        </Table>}
                     </div>
                 </div>}
             </div>

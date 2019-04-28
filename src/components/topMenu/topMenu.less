@@ -1,4 +1,7 @@
-.TopMenu-page {
+.TopMenu-page,
+.Mobile-TopMenu-page {
+    overflow: hidden;
+    zoom: 1;
     position: fixed;
     top: 0;
     z-index: 999;
@@ -39,7 +42,7 @@
             line-height: 32px;
             color: #333;
             background-color: #fff;
-            box-shadow: 0px 5px 15px 3px #ddd;
+            box-shadow: 0px 0px 15px -2px #000;
 
             p {
                 margin: 0;
@@ -78,11 +81,15 @@
         .user {
             position: relative;
             float: right;
-            margin-right: 10px;
+            padding-right: 10px;
 
             .anticon {
                 padding-left: 5px;
             } 
         }
     }
+}
+
+.Mobile-TopMenu-page {
+    padding-left: 20px;
 }

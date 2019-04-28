@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import {Icon} from 'antd';
 import './topMenu.less';
+import isMobile from './../../utils/isMobile';
 
 interface Props {
 }
@@ -15,6 +16,7 @@ class TopMenu extends React.PureComponent<Props, any> {
         this.state = {
             showLanguageModal: false,
             showUserModal: false,
+            isMobile: isMobile()
         }
     }
 
@@ -43,10 +45,10 @@ class TopMenu extends React.PureComponent<Props, any> {
     }
 
     render() {
-        const {showLanguageModal, showUserModal} = this.state;
+        const {showLanguageModal, showUserModal, isMobile} = this.state;
 
         return(
-            <div className="TopMenu-page">
+            <div className={isMobile? "Mobile-TopMenu-page" : "TopMenu-page"}>
                 <span>影像报告</span>
                 <div className="right">
                     <div className="language"

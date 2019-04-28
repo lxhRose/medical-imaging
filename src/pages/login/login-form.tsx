@@ -4,10 +4,11 @@ import React from 'react';
 import { withRouter } from 'dva/router'
 import { connect } from 'dva';
 // import MD5 from 'crypto-js/md5';
-import {Modal, Row, Col} from 'antd';
+import {Modal, Row, Col, Select} from 'antd';
 
 const FormItem = Form.Item;
 const TOKEN = 'token';
+const Option = Select.Option;
 
 interface Props {
   dispatch?: any,
@@ -80,12 +81,21 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
                 }
         });
     }
+    handleChange(value) {
+        console.log(`selected ${value}`);
+    }
 
   render() {
     const { getFieldDecorator } = this.props.form;
 
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
+        <FormItem>
+            <Select defaultValue="user" style={{ width: '100%' }} onChange={this.handleChange}>
+                <Option value="user">用户</Option>
+                <Option value="doctor">医生</Option>
+            </Select>
+        </FormItem>
         <FormItem>
           {getFieldDecorator('mobile', {
           })(
@@ -101,9 +111,10 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
                 <Input placeholder="请输入短信验证码" />
               )}
             </Col>
-            <Col span={10}>
-              {this.state.sendSms ? <Button type="primary" disabled>{this.state.countDown}s</Button> 
-              : <Button type="primary" onClick={this.sendSms}>发送验证码</Button>}
+            <Col span={10} className="code_btn_wrap">
+              {this.state.sendSms 
+              ? <Button type="primary" className="code_btn" disabled>{this.state.countDown}s</Button> 
+              : <Button type="primary" className="code_btn" onClick={this.sendSms}>发送验证码</Button>}
             </Col>
           </Row>
         </FormItem>
