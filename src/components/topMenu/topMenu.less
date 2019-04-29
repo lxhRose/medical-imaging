@@ -1,7 +1,5 @@
 .TopMenu-page,
 .Mobile-TopMenu-page {
-    overflow: hidden;
-    zoom: 1;
     position: fixed;
     top: 0;
     z-index: 999;
@@ -34,6 +32,7 @@
             position: absolute;
             top: 45px;
             left: 0;
+            z-index: 1000;
             border-radius: 5px;
             border: 1px solid #ddd;
             padding: 10px 0;
@@ -65,6 +64,7 @@
         .user-modal {
             left: inherit;
             right: 0;
+            z-index: 1000;
             width: 150px;
             height: auto;
             line-height: 40px;
@@ -81,7 +81,7 @@
         .user {
             position: relative;
             float: right;
-            padding-right: 10px;
+            margin-right: 10px;
 
             .anticon {
                 padding-left: 5px;
