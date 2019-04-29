@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
 import { ColumnProps } from 'antd/lib/table';
-import { Table, Menu, Icon, List, Pagination} from 'antd';
+import { Table, Menu, Icon, List, Pagination, Modal} from 'antd';
 import Report from './../report/report';
 import './main.less';
 import isMobile from './../../utils/isMobile';
@@ -13,10 +13,12 @@ const SubMenu = Menu.SubMenu;
 interface Props {
     dispatch?: any,
     main?: any,
+    App?: any,
 }
 
 @connect(state => ({
-    main: state.main
+    main: state.main,
+    App: state.App
 }))
 class Main extends React.PureComponent<Props, any> {
     private columns: Array < ColumnProps < any >>;
@@ -79,19 +81,31 @@ class Main extends React.PureComponent<Props, any> {
         this.loadList();
     }
 
+    // 全部影像
     loadList = () => {
         this.props.dispatch({
             type: 'main/loadList'
         })
     }
 
+    // 我的关注
+    followedExams = () => {
+        this.props.dispatch({
+            type: 'main/followedExams'
+        });
+    }
+
     // 更改页码
-    handleChangePage = (page: number, values?) => {
+    handleChangePage = (page: number) => {
         this.props.dispatch({
             type: 'main/changePage', 
             payload: page
         });
-        this.loadList(); // 页码改变 获取新页列表
+        switch(this.state.current) {
+            case 'alipay': this.loadList();break;
+            case 'followedExams': this.followedExams();break;
+            default: this.loadList();break;
+        }
     };
 
     // 更改页码大小
@@ -104,9 +118,17 @@ class Main extends React.PureComponent<Props, any> {
     };
 
     handleClick = (e) => {
-        console.log('click ', e);
-        this.setState({
-          current: e.key,
+       this.setCurrent(e.key).then(() => {
+           this.handleChangePage(1);
+       })
+    }
+
+    setCurrent = (current):Promise<any> => {
+        return new Promise((resolve, reject) => {
+            this.setState({
+                current: current,
+            });
+            resolve();
         });
     }
 
@@ -116,6 +138,36 @@ class Main extends React.PureComponent<Props, any> {
         this.setState({
             option: item,
             showReport: true
+        });
+    }
+
+    follows = (item) => {
+        this.props.dispatch({
+            type: 'main/follows',
+            payload: item.id
+        }).then((res) => {
+            if (parseInt(res.meta.code) === 200) {
+                Modal.success({
+                    title: '操作成功',
+                    content: '关注成功!',
+                    onOk: () => this.loadList()
+                });
+            }
+        });
+    }
+
+    delfollows = (item) => {
+        this.props.dispatch({
+            type: 'main/delfollows',
+            payload: item.id
+        }).then((res) => {
+            if (parseInt(res.meta.code) === 200) {
+                Modal.success({
+                    title: '操作成功',
+                    content: '已取消关注!',
+                    onOk: () => this.followedExams()
+                });
+            }
         });
     }
     
@@ -131,7 +183,8 @@ class Main extends React.PureComponent<Props, any> {
         const {
             showReport,
             option,
-            isMobile
+            isMobile,
+            current
         } = this.state;
 
         return(
@@ -148,7 +201,7 @@ class Main extends React.PureComponent<Props, any> {
                             <Menu.Item key="alipay">
                                 <a>全部影像</a>
                             </Menu.Item>
-                            <Menu.Item key="alipay2">
+                            <Menu.Item key="followedExams">
                                 <a>我的关注</a>
                             </Menu.Item>
                             <SubMenu title={<span className="submenu-title-wrapper">快捷查询<Icon type="caret-down" /></span>}>
@@ -159,8 +212,7 @@ class Main extends React.PureComponent<Props, any> {
                         </Menu>
                         {isMobile 
                         ? <div className="Mobile-page">
-                            <p>共 <strong>{data.length}</strong> 条数据</p>
-                            {/* <p>共 <strong>{totalRecord}</strong> 条数据</p> */}
+                            <p>共 <strong>{totalRecord}</strong> 条数据</p>
                             <List
                                 itemLayout="vertical"
                                 size="large"
@@ -212,6 +264,10 @@ class Main extends React.PureComponent<Props, any> {
                                                 <div className="action">
                                                     <a><Icon type="picture" />影像</a>
                                                     <a onClick={() => this.showReport(item)}><Icon type="medicine-box" />报告</a>
+                                                    {current === 'followedExams'
+                                                        ? <a onClick={() => this.delfollows(item)}><Icon type="minus" />取消关注</a>
+                                                        : <a onClick={() => this.follows(item)}><Icon type="plus" />关注</a>
+                                                    }
                                                 </div>
                                             </span>
                                         </div>
@@ -247,12 +303,16 @@ class Main extends React.PureComponent<Props, any> {
                             <Column
                                 title="操作"
                                 dataIndex="action"
-                                width="150px"
+                                width="250px"
                                 align={"center"}
                                 render={(text, record) => (
                                     <div className="action">
                                         <a><Icon type="picture" />影像</a>
                                         <a onClick={() => this.showReport(record)}><Icon type="medicine-box" />报告</a>
+                                        {current === 'followedExams'
+                                            ? <a onClick={() => this.delfollows(record)}><Icon type="minus" />取消关注</a>
+                                            : <a onClick={() => this.follows(record)}><Icon type="plus" />关注</a>
+                                        }
                                     </div>
                             )}/>
                         </Table>}

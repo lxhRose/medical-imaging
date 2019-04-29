@@ -24,6 +24,7 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
         this.state = {
             sendSms: false,
             countDown: 60,
+            role: 1
         }
     }
     handleSubmit = (e) => {
@@ -34,7 +35,8 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
                     type: 'login/Login',
                     payload: {
                         phoneNo: values.mobile,
-                        code: values.code
+                        code: values.code,
+                        role: this.state.role
                     }
                 }).then((response) => {
                     if (parseInt(response.meta.code) === 200) {
@@ -82,7 +84,9 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
         });
     }
     handleChange(value) {
-        console.log(`selected ${value}`);
+        this.setState({
+            role: value
+        });
     }
 
   render() {
@@ -91,9 +95,9 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-            <Select defaultValue="user" style={{ width: '100%' }} onChange={this.handleChange}>
-                <Option value="user">用户</Option>
-                <Option value="doctor">医生</Option>
+            <Select defaultValue="1" style={{ width: '100%' }} onChange={this.handleChange}>
+                <Option value="1">用户</Option>
+                <Option value="2">医生</Option>
             </Select>
         </FormItem>
         <FormItem>

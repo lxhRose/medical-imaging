@@ -1,7 +1,12 @@
 /**
  * model
  */
-import {fetchExam} from './main-server';
+import {
+    fetchExam, 
+    fetchFollowedExams,
+    fetchFollows,
+    fetchDelfollows
+} from './main-server';
 
 const initialState = {
     data: [], // 列表
@@ -19,37 +24,96 @@ export default {
   effects: {
     // 列表
     *loadList({ payload }, { call, put, select }) {
-      const  applyState = yield select(state => state.main);
-      const { pageNumber, pageSize } =  applyState;
-      const params = {
-        pageNumber,
-        pageSize,
-        ...payload,
-      };
-      yield put({
-        type: 'changeLoading',
-        payload: true,
-      });
-      const response = yield call(fetchExam, params);
-      yield put({
-        type: 'changeLoading',
-        payload: false,
-      });
-      if (parseInt(response.meta.code) === 200) {
-          yield put({
-            type: 'appendList',
-            payload: response,
-          });
-      }
+        const  applyState = yield select(state => state.main);
+        const { pageNumber, pageSize } =  applyState;
+        const params = {
+            pageNumber,
+            pageSize,
+            ...payload,
+        };
+        yield put({
+            type: 'changeLoading',
+            payload: true,
+        });
+        yield put({
+            type: 'App/changeLoading',
+            payload: {
+                loading: true,
+                text: "加载中"
+            }
+        });
+        const response = yield call(fetchExam, params);
+        yield put({
+            type: 'changeLoading',
+            payload: false,
+        });
+        yield put({
+            type: 'App/changeLoading',
+            payload: {
+                loading: false,
+                text: ""
+            }
+        });
+        if (parseInt(response.meta.code) === 200) {
+            yield put({
+                type: 'appendList',
+                payload: response,
+            });
+        }
+    },
+    *followedExams({ payload }, { call, put, select }) {
+        const  applyState = yield select(state => state.main);
+        const { pageNumber, pageSize } =  applyState;
+        const params = {
+            pageNumber,
+            pageSize,
+            ...payload,
+        };
+        yield put({
+            type: 'changeLoading',
+            payload: true,
+        });
+        yield put({
+            type: 'App/changeLoading',
+            payload: {
+                loading: true,
+                text: "加载中"
+            }
+        });
+        const response = yield call(fetchFollowedExams, params);
+        yield put({
+            type: 'changeLoading',
+            payload: false,
+        });
+        yield put({
+            type: 'App/changeLoading',
+            payload: {
+                loading: false,
+                text: ""
+            }
+        });
+        if (parseInt(response.meta.code) === 200) {
+            yield put({
+                type: 'appendList',
+                payload: response,
+            });
+        }
+    },
+    *follows({ payload }, { call, put, select }) {
+        const response = yield call(fetchFollows, payload);
+        return response;
+    },
+    *delfollows({ payload }, { call, put, select }) {
+        const response = yield call(fetchDelfollows, payload);
+        return response;
     },
   },
-
   reducers: {
     appendList(state, { payload }) {
       return {
         ...state,
-        data: payload.body.list,
-        // totalRecord: payload.body.page.total,
+        data: payload.body.examDTOs,
+        totalRecord: payload.body.count,
       };
     },
     changeSelectRow(state, { payload }) {

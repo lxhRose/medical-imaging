@@ -1,4 +1,5 @@
 import App from './app';
+import AppModel from './app-model';
 // import Report from './../pages/report/report';
 import reportModel from './../pages/report/report-model';
 import loginModel from './../pages/login/login-model';
@@ -9,5 +10,6 @@ export {
     // Report,
     reportModel,
     loginModel,
-    mainModel
+    mainModel,
+    AppModel
 }

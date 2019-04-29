@@ -4,6 +4,8 @@ import { connect } from 'dva';
 import { RouteComponentProps } from 'react-router';
 import {TopMenu} from './../components/index';
 import {message} from 'antd';
+import {Loading} from './../components/index';
+import isMobile from './../utils/isMobile';
 
 import './app.less';
 
@@ -20,12 +22,20 @@ class App extends React.PureComponent<Props & RouteComponentProps<any, any>, any
         super(props);
     }
 
+    componentDidMount = () => {
+        this.props.dispatch({
+            type: 'App/loginUserInfo'
+        });
+    }
+
     render() {
+        const {loading, text} = this.props.App;
 
         return (
             <div className="App-page">
                 <TopMenu></TopMenu>
                 {this.props.children}
+                {isMobile() && loading && <Loading text={text}></Loading>}
             </div>
         );
     }

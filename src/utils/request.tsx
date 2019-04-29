@@ -51,7 +51,7 @@ export default function request(url, options?) {
       } else {
         newOptions.headers = {
           'Accept': 'application/json',
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/json;charset=utf-8',
         };
         newOptions.body = JSON.stringify(newOptions.params);
       }
@@ -60,7 +60,7 @@ export default function request(url, options?) {
       newUrl = newOptions.params ? `${newUrl}?${stringify(newOptions.params)}` : newUrl;
     }
     if (sessionStorage.getItem('token')) {
-      newOptions.headers.token = sessionStorage.getItem('token');
+        newOptions.headers.token = sessionStorage.getItem('token');
     }
     return fetch(newUrl, newOptions)
       .then((response) => response.json())
@@ -85,4 +85,4 @@ export default function request(url, options?) {
         }
         return error;
     });
-  }
+}

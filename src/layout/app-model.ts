@@ -2,14 +2,9 @@ import { Model } from 'dva';
 import { fetchLoginUserInfo } from './app-server';
 
 const initialState = {
-    collapsed: false,
-    userInfo: {
-        userCode: "",
-        userName: "",
-        roleDesc: "",
-        role: -1
-    },
-    role: -1 // 0：超级管理员，1：医生，2：财务
+    loading: false,
+    text: '',
+    role: 1 //1：用户，2：医生
 };
 
 export default <Model> {
@@ -26,14 +21,20 @@ export default <Model> {
         appendUserInfo(state, {payload}) {
             return {
                 ...state,
-                userInfo:  payload.body,
-                role: payload.body.role
+                role:  payload.body,
             }
         },
         changeRole(state, {payload}) {
             return {
                 ...state,
                 role: payload.role
+            }
+        },
+        changeLoading(state, {payload}) {
+            return {
+                ...state,
+                loading: payload.loading,
+                text: payload.text
             }
         }
     },
