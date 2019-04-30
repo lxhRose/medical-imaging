@@ -42,8 +42,7 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
                     if (parseInt(response.meta.code) === 200) {
                         sessionStorage.setItem(TOKEN, response.body.token);
                         // this.props.dispatch({
-                        //     type: 'main/changeRole',
-                        //     payload: { role: response.body.role }
+                        //     type: 'App/loginUserInfo'
                         // });
                         const { history } = this.props;
                         history.replace(`/main`);
@@ -83,7 +82,7 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
                 }
         });
     }
-    handleChange(value) {
+    handleChange = (value) => {
         this.setState({
             role: value
         });

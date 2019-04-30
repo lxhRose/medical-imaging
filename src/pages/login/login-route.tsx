@@ -23,7 +23,12 @@ class LoginRoute extends React.PureComponent<Props, any> {
         }
     }
 
-    componentDidMount() {
+    componentWillMount = () => {
+        window.addEventListener('resize', () => {
+            this.setState({
+                isMobile: isMobile()
+            })
+        });
     }
 
     render() {

@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
 import { ColumnProps } from 'antd/lib/table';
-import { Table, Menu, Icon, List, Pagination, Modal} from 'antd';
+import { Table, Menu, Icon, List, Modal} from 'antd';
 import Report from './../report/report';
 import './main.less';
-import isMobile from './../../utils/isMobile';
 
 const {Column} = Table;
 const SubMenu = Menu.SubMenu;
@@ -24,38 +23,61 @@ class Main extends React.PureComponent<Props, any> {
     private columns: Array < ColumnProps < any >>;
     constructor(props) {
         super(props);
-        this.columns = [
-        {
-            dataIndex: 'hospExamExternalId',
-            title: 'ID号'
-        }, {
-            dataIndex: 'patientName',
-            title: '姓名'
-        }, {
-            dataIndex: 'patientSex',
-            title: '性别',
-        },  {
-            dataIndex: 'patientExamAge',
-            title: '检查年龄',
-        },
-        {
-            dataIndex: 'modalityType',
-            title: '设备类型'
-        }, {
-            dataIndex: 'examItemName',
-            title: '检查部位'
-        }, {
-            dataIndex: 'hospName',
-            title: '机构名称',
-        },  {
-            dataIndex: 'examTime',
-            title: '检查日期',
-        }]
+        if (this.props.App.role === 2) {
+            this.columns = [
+                {
+                    dataIndex: 'hospExamExternalId',
+                    title: 'ID号'
+                }, {
+                    dataIndex: 'patientName',
+                    title: '姓名'
+                }, {
+                    dataIndex: 'patientSex',
+                    title: '性别',
+                },  {
+                    dataIndex: 'patientExamAge',
+                    title: '检查年龄',
+                },
+                {
+                    dataIndex: 'modalityType',
+                    title: '设备类型'
+                }, {
+                    dataIndex: 'examItemName',
+                    title: '检查部位'
+                }, {
+                    dataIndex: 'hospName',
+                    title: '机构名称',
+                },  {
+                    dataIndex: 'examTime',
+                    title: '检查日期',
+                }
+            ]
+        } else {
+            this.columns = [
+            {
+                dataIndex: 'hospExamExternalId',
+                title: 'ID号'
+            },  {
+                dataIndex: 'patientExamAge',
+                title: '检查年龄',
+            },{
+                dataIndex: 'modalityType',
+                title: '设备类型'
+            }, {
+                dataIndex: 'examItemName',
+                title: '检查部位'
+            }, {
+                dataIndex: 'hospName',
+                title: '机构名称',
+            },  {
+                dataIndex: 'examTime',
+                title: '检查日期',
+            }]
+        }
         this.state = {
             current: 'alipay',
             showReport: false,
             option: {},
-            isMobile: isMobile()
         }
     }
 
@@ -181,11 +203,17 @@ class Main extends React.PureComponent<Props, any> {
         } = this.props.main;
 
         const {
+            isMobile,
+            role
+        } = this.props.App;
+
+        const {
             showReport,
             option,
-            isMobile,
             current
         } = this.state;
+
+        console.log(role)
 
         return(
             <div>
@@ -201,14 +229,16 @@ class Main extends React.PureComponent<Props, any> {
                             <Menu.Item key="alipay">
                                 <a>全部影像</a>
                             </Menu.Item>
-                            <Menu.Item key="followedExams">
-                                <a>我的关注</a>
-                            </Menu.Item>
-                            <SubMenu title={<span className="submenu-title-wrapper">快捷查询<Icon type="caret-down" /></span>}>
+                            {role === 2 &&
+                                <Menu.Item key="followedExams">
+                                    <a>我的关注</a>
+                                </Menu.Item>
+                            }
+                            {/* <SubMenu title={<span className="submenu-title-wrapper">快捷查询<Icon type="caret-down" /></span>}>
                                 <Menu.Item key="setting:1">今日检查</Menu.Item>
                                 <Menu.Item key="setting:2">今日普放</Menu.Item>
                                 <Menu.Item key="setting:3">今日CT</Menu.Item>
-                            </SubMenu>
+                            </SubMenu> */}
                         </Menu>
                         {isMobile 
                         ? <div className="Mobile-page">
@@ -230,14 +260,16 @@ class Main extends React.PureComponent<Props, any> {
                                             <span>ID号</span>
                                             <span>{item.hospExamExternalId}</span>
                                         </div>
-                                        <div className="row">
-                                            <span>姓名</span>
-                                            <span>{item.patientName}</span>
-                                        </div>
-                                        <div className="row">
-                                            <span>性别</span>
-                                            <span>{item.patientSex}</span>
-                                        </div>
+                                        {role === 2 &&
+                                            <div className="row">
+                                                <span>姓名</span>
+                                                <span>{item.patientName}</span>
+                                            </div>}
+                                        {role === 2 &&
+                                            <div className="row">
+                                                <span>性别</span>
+                                                <span>{item.patientSex}</span>
+                                            </div>}
                                         <div className="row">
                                             <span>检查年龄</span>
                                             <span>{item.patientExamAge}</span>
@@ -263,10 +295,16 @@ class Main extends React.PureComponent<Props, any> {
                                             <span>
                                                 <div className="action">
                                                     <a><Icon type="picture" />影像</a>
-                                                    <a onClick={() => this.showReport(item)}><Icon type="medicine-box" />报告</a>
-                                                    {current === 'followedExams'
-                                                        ? <a onClick={() => this.delfollows(item)}><Icon type="minus" />取消关注</a>
-                                                        : <a onClick={() => this.follows(item)}><Icon type="plus" />关注</a>
+                                                    <a onClick={() => this.showReport(item)}>
+                                                        <Icon type="medicine-box" />报告</a>
+                                                    {role === 2  ? (current === 'followedExams'
+                                                        ? <a onClick={() => this.delfollows(item)}>
+                                                            <Icon 
+                                                                type="star" 
+                                                                theme="filled" 
+                                                                style={{color: '#faad14'}} />取消关注</a>
+                                                        : <a onClick={() => this.follows(item)}>
+                                                            <Icon type="star" />关注</a>) : null
                                                     }
                                                 </div>
                                             </span>
@@ -308,10 +346,16 @@ class Main extends React.PureComponent<Props, any> {
                                 render={(text, record) => (
                                     <div className="action">
                                         <a><Icon type="picture" />影像</a>
-                                        <a onClick={() => this.showReport(record)}><Icon type="medicine-box" />报告</a>
-                                        {current === 'followedExams'
-                                            ? <a onClick={() => this.delfollows(record)}><Icon type="minus" />取消关注</a>
-                                            : <a onClick={() => this.follows(record)}><Icon type="plus" />关注</a>
+                                        <a onClick={() => this.showReport(record)}>
+                                            <Icon type="medicine-box" />报告</a>
+                                        {role === 2  ? (current === 'followedExams'
+                                            ? <a onClick={() => this.delfollows(record)}>
+                                                <Icon 
+                                                    type="star" 
+                                                    theme="filled" 
+                                                    style={{color: '#faad14'}} />取消关注</a>
+                                            : <a onClick={() => this.follows(record)} >
+                                                <Icon type="star" />关注</a>) : null
                                         }
                                     </div>
                             )}/>

@@ -4,7 +4,8 @@ import { fetchLoginUserInfo } from './app-server';
 const initialState = {
     loading: false,
     text: '',
-    role: 1 //1：用户，2：医生
+    isMobile: false,
+    role: 2//1：用户，2：医生
 };
 
 export default <Model> {
@@ -24,17 +25,17 @@ export default <Model> {
                 role:  payload.body,
             }
         },
-        changeRole(state, {payload}) {
-            return {
-                ...state,
-                role: payload.role
-            }
-        },
         changeLoading(state, {payload}) {
             return {
                 ...state,
                 loading: payload.loading,
                 text: payload.text
+            }
+        },
+        changeIsMobile(state, {payload}) {
+            return {
+                ...state,
+                isMobile: payload
             }
         }
     },

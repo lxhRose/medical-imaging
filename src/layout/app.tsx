@@ -22,20 +22,33 @@ class App extends React.PureComponent<Props & RouteComponentProps<any, any>, any
         super(props);
     }
 
+    componentWillMount = () => {
+        window.addEventListener('resize', () => {
+            this.props.dispatch({
+                type: 'App/changeIsMobile',
+                payload: isMobile()
+            });
+        })
+    }
+
     componentDidMount = () => {
         this.props.dispatch({
             type: 'App/loginUserInfo'
         });
+        this.props.dispatch({
+            type: 'App/changeIsMobile',
+            payload: isMobile()
+        });
     }
 
     render() {
-        const {loading, text} = this.props.App;
+        const {loading, text, isMobile} = this.props.App;
 
         return (
             <div className="App-page">
                 <TopMenu></TopMenu>
                 {this.props.children}
-                {isMobile() && loading && <Loading text={text}></Loading>}
+                {isMobile && loading && <Loading text={text}></Loading>}
             </div>
         );
     }

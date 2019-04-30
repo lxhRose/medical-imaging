@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'dva';
 import {Icon} from 'antd';
 import './topMenu.less';
-import isMobile from './../../utils/isMobile';
 
 interface Props {
+    App?: any
 }
 
 @connect(state => ({
-    main: state.main
+    App: state.App
 }))
 class TopMenu extends React.PureComponent<Props, any> {
     constructor(props) {
@@ -16,7 +16,6 @@ class TopMenu extends React.PureComponent<Props, any> {
         this.state = {
             showLanguageModal: false,
             showUserModal: false,
-            isMobile: isMobile()
         }
     }
 
@@ -45,7 +44,8 @@ class TopMenu extends React.PureComponent<Props, any> {
     }
 
     render() {
-        const {showLanguageModal, showUserModal, isMobile} = this.state;
+        const {showLanguageModal, showUserModal} = this.state;
+        const {isMobile} = this.props.App;
 
         return(
             <div className={isMobile? "Mobile-TopMenu-page" : "TopMenu-page"}>
