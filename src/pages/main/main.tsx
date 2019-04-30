@@ -213,8 +213,6 @@ class Main extends React.PureComponent<Props, any> {
             current
         } = this.state;
 
-        console.log(role)
-
         return(
             <div>
                 {showReport
