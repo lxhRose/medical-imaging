@@ -4,7 +4,6 @@ import { withRouter } from 'dva/router';
 import { Menu, Modal } from 'antd'; 
 import PCPage from './components/PCPage';
 import MobilePage from './components/MobilePage';
-import DoctorManage from './components/doctorManage';
 import './main.less';
 
 interface Props {
@@ -22,13 +21,13 @@ class Main extends React.PureComponent<Props, any> {
     constructor(props) {
         super(props);
         this.state = {
-            current: 'alipay',
+            current: sessionStorage.getItem('current') || 'alipay',
             showAddDoctorState: false
         }
     }
 
     componentDidMount() {
-        this.loadList();
+        this.handleChangePage(1);
     }
 
     // 全部影像
@@ -76,6 +75,9 @@ class Main extends React.PureComponent<Props, any> {
     };
 
     handleClick = (e) => {
+        this.props.dispatch({
+            type: 'main/clearData'
+        });
         this.setCurrent(e.key).then(() => {
             this.handleChangePage(1);
         });
@@ -87,6 +89,7 @@ class Main extends React.PureComponent<Props, any> {
                 current: current,
                 showAddDoctorState: false
             });
+            sessionStorage.setItem('current', current);
             resolve();
         });
     }
@@ -133,7 +136,6 @@ class Main extends React.PureComponent<Props, any> {
             }
         });
     }
-
     
     showAddDoctor = () => {
         this.setState({

@@ -1,17 +1,6 @@
 import fetch from 'dva/fetch';
-import * as React from 'react';
 import {stringify} from 'qs';
-import { Modal, message } from 'antd';
-
-const proxyMap = {
-  // 标签
-  'GET /applies': {
-    url: '../devtool/schemas/label-apply-list.json'
-  },
-  'POST /repository/save': {
-    url: '../devtool/schemas/repository-save.json'
-  },
-}
+import { Modal } from 'antd';
 
 // const TEST_URL = "";
 const TEST_URL = "http://medical-test.mecby.com";

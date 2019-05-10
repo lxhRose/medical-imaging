@@ -8,7 +8,7 @@ export async function fetchExam(params) {
 }
 
 export async function fetchFollowedExams(params) {
-    return request('screens/exam/followedExams', {
+    return request('/screens/exam/followedExams', {
         method: 'GET',
         params,
     });

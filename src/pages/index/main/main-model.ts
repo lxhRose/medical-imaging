@@ -13,7 +13,7 @@ import {
 const initialState = {
     data: [], // 列表
     loading: false,
-    totalRecord: 1,
+    totalRecord: 0,
     pageNumber: 1,
     pageSize: 10,
     visibleModal: false,
@@ -159,6 +159,13 @@ export default {
         data: payload.body.examDTOs,
         totalRecord: payload.body.count,
       };
+    },
+    clearData(state) {
+        return {
+            ...state,
+            data: [],
+            totalRecord: 0,
+        };
     },
     appendDoctors(state, { payload }) {
       return {
