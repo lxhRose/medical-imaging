@@ -23,6 +23,7 @@ class Main extends React.PureComponent<Props, any> {
         super(props);
         this.state = {
             current: 'alipay',
+            showAddDoctorState: false
         }
     }
 
@@ -44,6 +45,13 @@ class Main extends React.PureComponent<Props, any> {
         });
     }
 
+    // 医生列表
+    loadDoctors = () => {
+        this.props.dispatch({
+            type: 'main/loadDoctors'
+        });
+    }
+
     // 更改页码
     handleChangePage = (page: number) => {
         this.props.dispatch({
@@ -53,6 +61,7 @@ class Main extends React.PureComponent<Props, any> {
         switch(this.state.current) {
             case 'alipay': this.loadList();break;
             case 'followedExams': this.followedExams();break;
+            case 'doctorManage': this.loadDoctors();break;
             default: this.loadList();break;
         }
     };
@@ -68,9 +77,7 @@ class Main extends React.PureComponent<Props, any> {
 
     handleClick = (e) => {
         this.setCurrent(e.key).then(() => {
-            if (e.key !== 'doctorManage') {
-                this.handleChangePage(1);
-            }
+            this.handleChangePage(1);
         });
     }
 
@@ -78,6 +85,7 @@ class Main extends React.PureComponent<Props, any> {
         return new Promise((resolve, reject) => {
             this.setState({
                 current: current,
+                showAddDoctorState: false
             });
             resolve();
         });
@@ -126,6 +134,13 @@ class Main extends React.PureComponent<Props, any> {
         });
     }
 
+    
+    showAddDoctor = () => {
+        this.setState({
+            showAddDoctorState: !this.state.showAddDoctorState
+        });
+    }
+
     render() {
         const {
             loading,
@@ -142,7 +157,8 @@ class Main extends React.PureComponent<Props, any> {
         } = this.props.App;
 
         const {
-            current
+            current,
+            showAddDoctorState
         } = this.state;
 
         const option = {
@@ -152,11 +168,14 @@ class Main extends React.PureComponent<Props, any> {
             pageSize,
             totalRecord,
             role,
+            isAdmin,
             current,
+            showAddDoctorState,
             handleChangePage: this.handleChangePage.bind(this),
             handleChangePageSize: this.handleChangePageSize.bind(this),
             showReport: this.showReport.bind(this),
             delfollows: this.delfollows.bind(this),
+            showAddDoctor: this.showAddDoctor.bind(this),
             follows: this.follows.bind(this)
         }
 
@@ -183,17 +202,11 @@ class Main extends React.PureComponent<Props, any> {
                             </Menu.Item>
                         }
                     </Menu>
-                    {current === 'doctorManage' 
-                    ? <div>{isAdmin && 
-                        <div className={isMobile ? 'Mobile-doctorManage' : 'PC-doctorManage'}>
-                            <DoctorManage />
-                        </div>}
-                    </div>
-                    : <div>
+                    <div>
                         {isMobile 
                         ? <MobilePage option={option} />
                         : <PCPage option={option} />}
-                    </div>}
+                    </div>
                 </div>
             </div>
         )

@@ -32,3 +32,10 @@ export async function fetchDoctors(params) {
         params
     });
 }
+
+export async function fetchLoadDoctors(params) {
+    return request(`/screens/admin/doctors`, {
+        method: 'GET',
+        params
+    });
+}

@@ -38,10 +38,18 @@
         }
 
         .Mobile-page {
+            position: relative;
             padding: 10px 20px;
 
             p {
                 margin: 0;
+                line-height: 40px;
+            }
+
+            .addDoctor {
+                position: absolute;
+                top: 15px;
+                right: 20px;
             }
             
             .Mobile_list {
@@ -70,19 +78,28 @@
                     &:first-child {
                         border-top: 0; 
                     }
-
-                    &:last-child {
-                        border-top: 1px solid #ddd;
-                        height: 50px;
-                        line-height: 50px;
-                    }
                 }
+                .actionRow {
+                    border-top: 1px solid #ddd;
+                    height: 50px;
+                    line-height: 50px;
+                }
+            }
+        }
+
+        .PC-page {
+            position: relative;
+
+            .addDoctor {
+                position: absolute;
+                top: -40px;
+                right: 20px;
             }
         }
 
         .Mobile-doctorManage,
         .PC-doctorManage {
-            padding: 20px;
+            padding: 20px 0;
             width: 100%;
 
             .ant-form-item {

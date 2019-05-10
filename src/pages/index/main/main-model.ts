@@ -6,7 +6,8 @@ import {
     fetchFollowedExams,
     fetchFollows,
     fetchDelfollows,
-    fetchDoctors
+    fetchDoctors,
+    fetchLoadDoctors
 } from './main-server';
 
 const initialState = {
@@ -100,6 +101,44 @@ export default {
             });
         }
     },
+    *loadDoctors({ payload }, { call, put, select }) {
+        const  applyState = yield select(state => state.main);
+        const { pageNumber, pageSize } =  applyState;
+        const params = {
+            pageNumber,
+            pageSize,
+            ...payload,
+        };
+        yield put({
+            type: 'changeLoading',
+            payload: true,
+        });
+        yield put({
+            type: 'App/changeLoading',
+            payload: {
+                loading: true,
+                text: "加载中"
+            }
+        });
+        const response = yield call(fetchLoadDoctors, params);
+        yield put({
+            type: 'changeLoading',
+            payload: false,
+        });
+        yield put({
+            type: 'App/changeLoading',
+            payload: {
+                loading: false,
+                text: ""
+            }
+        });
+        if (parseInt(response.meta.code) === 200) {
+            yield put({
+                type: 'appendDoctors',
+                payload: response,
+            });
+        }
+    },
     *follows({ payload }, { call, put, select }) {
         const response = yield call(fetchFollows, payload);
         return response;
@@ -118,6 +157,13 @@ export default {
       return {
         ...state,
         data: payload.body.examDTOs,
+        totalRecord: payload.body.count,
+      };
+    },
+    appendDoctors(state, { payload }) {
+      return {
+        ...state,
+        data: payload.body.doctors,
         totalRecord: payload.body.count,
       };
     },
