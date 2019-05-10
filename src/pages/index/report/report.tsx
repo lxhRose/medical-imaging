@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'dva';
 import { withRouter } from 'dva/router';
 import {Row, Col, Input, Button, Icon } from 'antd';
-import isMobile from './../../utils/isMobile';
 import './report.less';
 
 const Search = Input.Search;
@@ -11,11 +10,13 @@ const { TextArea } = Input;
 interface Props {
     dispatch?: any,
     report?: any,
+    App?: any,
     option: any
 }
 
 @connect(state => ({
-    report: state.report
+    report: state.report,
+    App: state.App,
 }))
 class Report extends React.PureComponent<Props, any> {
     constructor(props) {
@@ -27,7 +28,6 @@ class Report extends React.PureComponent<Props, any> {
             openChild: false,
             xtzskData: ['新标签'],
             grzskData: [],
-            isMobile: isMobile()
         }
     }
 
@@ -94,8 +94,10 @@ class Report extends React.PureComponent<Props, any> {
             openChild, 
             grzskData, 
             selectedRight,
-            isMobile
         } = this.state;
+        const {
+            isMobile,
+        } = this.props.App;
         const {data} = this.props.report;
         const {option} = this.props;
 

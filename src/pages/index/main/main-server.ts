@@ -1,4 +1,4 @@
-import request from '../../utils/request';
+import request from '../../../utils/request';
 
 export async function fetchExam(params) {
     return request('/screens/exam', {
@@ -23,5 +23,12 @@ export async function fetchFollows(examID) {
 export async function fetchDelfollows(examID) {
     return request(`/screens/exam/${examID}/follows`, {
         method: 'DELETE',
+    });
+}
+
+export async function fetchDoctors(params) {
+    return request(`/screens/admin/doctors`, {
+        method: 'POST',
+        params
     });
 }

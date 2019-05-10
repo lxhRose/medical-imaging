@@ -4,11 +4,10 @@ import * as zhCN from 'antd/lib/locale-provider/zh_CN';
 import { Router, Route, Switch, Redirect } from 'dva/router';
 
 import Login from './pages/login/login-route';
-import Main from './pages/main/main';
 
 import {
     App,
-    // Report
+    Index
 } from './layout/index';
 
 const setTitle = (title) => document.title = title;
@@ -23,7 +22,7 @@ function RouterConfig({ history, app }) {
                     <Route path="/" render={(props)=>(
                         <App>
                             <Switch>
-                                <Route path= "/main" key="Main" exact component={Main} />
+                                <Route path= "/main" key="Index" exact component={Index} />
                                 {/* <Route path= "/report" key="Report" exact component={Report} /> */}
                                 <Route path="/" exact render={()=><Redirect to="/main"/>}/>
                             </Switch>

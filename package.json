@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": " cross-env BROWSER=none NO_PROXY=true PORT=3000 roadhog server",
+    "start": " cross-env BROWSER=none NO_PROXY=true PORT=8080 roadhog server",
     "start:proxy": "cross-env BROWSER=none PORT=3000 roadhog server",
     "build": "roadhog build",
     "lint": "eslint --ext .js src test",

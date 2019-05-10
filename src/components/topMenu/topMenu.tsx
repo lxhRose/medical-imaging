@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import {Icon} from 'antd';
+import isMobile from './../../utils/isMobile';
 import './topMenu.less';
 
 interface Props {
@@ -45,11 +46,10 @@ class TopMenu extends React.PureComponent<Props, any> {
 
     render() {
         const {showLanguageModal, showUserModal} = this.state;
-        const {isMobile} = this.props.App;
 
         return(
-            <div className={isMobile? "Mobile-TopMenu-page" : "TopMenu-page"}>
-                <span>影像报告</span>
+            <div className={isMobile()? "Mobile-TopMenu-page" : "TopMenu-page"}>
+                <span>边源科技</span>
                 <div className="right">
                     <div className="language"
                      onMouseOver={()=>this.showModal("language")}

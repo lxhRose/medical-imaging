@@ -1,4 +1,4 @@
-import request from '../../utils/request';
+import request from '../../../utils/request';
 
 // 登录
 export async function fetchReport(params) {

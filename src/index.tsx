@@ -5,7 +5,8 @@ import {
     reportModel,
     loginModel,
     mainModel,
-    AppModel
+    AppModel,
+    indexModel
 } from './layout/index';
 
 import './index.less';
@@ -16,5 +17,6 @@ app.model(loginModel);
 app.model(mainModel);
 app.model(reportModel);
 app.model(AppModel);
+app.model(indexModel);
 app.router(RouterConfig);
 app.start('#root');

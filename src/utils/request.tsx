@@ -13,8 +13,8 @@ const proxyMap = {
   },
 }
 
-// const TEST_URL = "/api";
-const TEST_URL = "";
+// const TEST_URL = "";
+const TEST_URL = "http://medical-test.mecby.com";
 let modal = [];
 function notifyException(data) {
   if (parseInt(data.meta.code, 10) !== 200) {

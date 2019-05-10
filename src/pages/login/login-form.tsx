@@ -59,27 +59,27 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
                 const {mobile} = values;
                 const path = /^[1][3,4,5,7,8][0-9]{9}$/;
                 const isVali = path.test(mobile);
-                    if (isVali) {
-                        this.setState({
-                            sendSms: true
-                        });
-                        const timer = setInterval(() => {
-                            this.setState({ countDown: this.state.countDown - 1 });
-                            if (this.state.countDown === 0) {
-                            this.setState({ sendSms: false, countDown: 60 });
-                            clearInterval(timer);
-                            }
-                        }, 1000);
-                        this.props.dispatch({
-                            type: 'login/sendSms',
-                            payload: {
-                                phoneNo: mobile
-                            }
-                        });
-                    } else {
-                        Modal.error({title: '提示', content: '请填写正确的手机号！'});
-                    }
+                if (isVali) {
+                    this.setState({
+                        sendSms: true
+                    });
+                    const timer = setInterval(() => {
+                        this.setState({ countDown: this.state.countDown - 1 });
+                        if (this.state.countDown === 0) {
+                        this.setState({ sendSms: false, countDown: 60 });
+                        clearInterval(timer);
+                        }
+                    }, 1000);
+                    this.props.dispatch({
+                        type: 'login/sendSms',
+                        payload: {
+                            phoneNo: mobile
+                        }
+                    });
+                } else {
+                    Modal.error({title: '提示', content: '请填写正确的手机号！'});
                 }
+            }
         });
     }
     handleChange = (value) => {

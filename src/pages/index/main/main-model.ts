@@ -5,7 +5,8 @@ import {
     fetchExam, 
     fetchFollowedExams,
     fetchFollows,
-    fetchDelfollows
+    fetchDelfollows,
+    fetchDoctors
 } from './main-server';
 
 const initialState = {
@@ -105,6 +106,10 @@ export default {
     },
     *delfollows({ payload }, { call, put, select }) {
         const response = yield call(fetchDelfollows, payload);
+        return response;
+    },
+    *doctors({ payload }, { call, put, select }) {
+        const response = yield call(fetchDoctors, payload);
         return response;
     },
   },

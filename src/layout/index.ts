@@ -1,9 +1,10 @@
 import App from './app';
 import AppModel from './app-model';
-// import Report from './../pages/report/report';
-import reportModel from './../pages/report/report-model';
+import reportModel from '../pages/index/report/report-model';
 import loginModel from './../pages/login/login-model';
-import mainModel from './../pages/main/main-model';
+import mainModel from './../pages/index/main/main-model';
+import Index from './../pages/index/index';
+import indexModel from './../pages/index/index-model';
 
 export {
     App,
@@ -11,5 +12,7 @@ export {
     reportModel,
     loginModel,
     mainModel,
-    AppModel
+    AppModel,
+    Index,
+    indexModel
 }

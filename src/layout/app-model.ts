@@ -5,7 +5,8 @@ const initialState = {
     loading: false,
     text: '',
     isMobile: false,
-    role: 2//1：用户，2：医生
+    role: 2,//1：用户，2：医生
+    isAdmin: false
 };
 
 export default <Model> {
@@ -22,7 +23,8 @@ export default <Model> {
         appendUserInfo(state, {payload}) {
             return {
                 ...state,
-                role:  payload.body,
+                role:  payload.body.role,
+                isAdmin:  payload.body.isAdmin,
             }
         },
         changeLoading(state, {payload}) {
