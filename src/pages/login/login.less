@@ -56,13 +56,19 @@
             }
         }
     }
+}
 
-    // .mobile-page {
-    //     .login_content_warp {
-    //         .login_form_box {
-    //             // margin-left: -44%;
-    //             // width: 88%;
-    //         }
-    //     }
-    // }
+@media screen and (max-width: 300px) {
+    .login-page {
+        .mobile-page,
+        .pc-page {
+            .login_content_warp {
+                .login_form_box {
+                    left: 0;
+                    margin-left: 0;
+                    width: 100%;
+                }
+            }
+        }
+    }
 }

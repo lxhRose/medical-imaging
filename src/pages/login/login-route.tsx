@@ -33,11 +33,12 @@ class LoginRoute extends React.PureComponent<Props, any> {
 
     render() {
         const {isMobile} = this.state;
+        console.log(isMobile)
 
         return(
             <div className="login-page">
                <div className={isMobile ? "mobile-page" : "pc-page"}>
-                        <TopMenu></TopMenu>
+                        <TopMenu isMobile={isMobile}></TopMenu>
                         <div className="login_content_warp">
                             <div className="login_form_box">
                                 <div className="login_form_head">

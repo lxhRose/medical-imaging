@@ -1,15 +1,11 @@
 import React from 'react';
-import { connect } from 'dva';
 import {Icon} from 'antd';
 import './topMenu.less';
 
 interface Props {
-    App?: any
+    isMobile?: any,
 }
 
-@connect(state => ({
-    App: state.App
-}))
 class TopMenu extends React.PureComponent<Props, any> {
     constructor(props) {
         super(props);
@@ -45,10 +41,9 @@ class TopMenu extends React.PureComponent<Props, any> {
 
     render() {
         const {showLanguageModal, showUserModal} = this.state;
-        const {isMobile} = this.props.App;
 
         return(
-            <div className={isMobile? "Mobile-TopMenu-page" : "TopMenu-page"}>
+            <div className={this.props.isMobile ? "Mobile-TopMenu-page" : "TopMenu-page"}>
                 <span>边源科技</span>
                 <div className="right">
                     <div className="language"

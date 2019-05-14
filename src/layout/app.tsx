@@ -23,6 +23,10 @@ class App extends React.PureComponent<Props & RouteComponentProps<any, any>, any
     }
 
     componentWillMount = () => {
+        this.props.dispatch({
+            type: 'App/changeIsMobile',
+            payload: isMobile()
+        });
         window.addEventListener('resize', () => {
             this.props.dispatch({
                 type: 'App/changeIsMobile',
@@ -35,10 +39,6 @@ class App extends React.PureComponent<Props & RouteComponentProps<any, any>, any
         this.props.dispatch({
             type: 'App/loginUserInfo'
         });
-        this.props.dispatch({
-            type: 'App/changeIsMobile',
-            payload: isMobile()
-        });
     }
 
     render() {
@@ -46,7 +46,7 @@ class App extends React.PureComponent<Props & RouteComponentProps<any, any>, any
 
         return (
             <div className="App-page">
-                <TopMenu></TopMenu>
+                <TopMenu isMobile={isMobile}></TopMenu>
                 {this.props.children}
                 {isMobile && loading && <Loading text={text}></Loading>}
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'dva/router';
-import { Icon, List, Button } from 'antd';
+import { Icon, List, Button, Pagination } from 'antd';
 import DoctorManage from './doctorManage';
 
 interface Props {
@@ -19,10 +19,10 @@ class MobilePage extends React.PureComponent<Props, any> {
             totalRecord,
             role,
             current,
+            paginationCurrent,
             isAdmin,
             showAddDoctorState,
             handleChangePage,
-            handleChangePageSize,
             showReport,
             delfollows,
             follows,
@@ -31,36 +31,45 @@ class MobilePage extends React.PureComponent<Props, any> {
 
         return(
             <div className="Mobile-page">
-                <p>共 <strong>{totalRecord}</strong> 条数据</p>
                 {current === 'doctorManage' && isAdmin
-                    && <Button type="primary"
-                     className="addDoctor" 
-                     onClick={showAddDoctor}>{showAddDoctorState?'医生列表':'添加医生'}</Button>}
+                && <Button className="addDoctor"
+                        onClick={showAddDoctor}>{showAddDoctorState?'医生列表':'添加医生'}</Button>}
                 {showAddDoctorState 
                 ? <div>{isAdmin && 
                     <div className='Mobile-doctorManage'>
                         <DoctorManage/>
                     </div>}
                 </div>
-                : <List
-                    itemLayout="vertical"
-                    size="large"
-                    pagination={{
-                        onChange: handleChangePage,
-                        pageSize: pageSize,
-                        total: totalRecord,
-                        showSizeChanger: true,
-                        onShowSizeChange: handleChangePageSize,
-                    }}
-                    dataSource={data}
-                    renderItem={(item, index) => (
-                        <div key={index} className="Mobile_list">
-                            {(current === 'doctorManage' && isAdmin)
-                            ? doctorList(item)
-                            : medicalList(item, role, showReport, current, delfollows, follows)}
-                        </div>
-                    )}
-                />}
+                : <div>
+                    <Pagination
+                        total={totalRecord}
+                        onChange={handleChangePage}
+                        pageSize={pageSize}
+                        current={paginationCurrent}
+                        // hideOnSinglePage={true}
+                        showTotal = {(totalNum, range) => <span>共有 <strong>{totalNum}</strong> 条记录</span>}
+                        style={{textAlign: 'center', paddingTop: '10px'}} />
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+                        pagination={{
+                            total: totalRecord,
+                            onChange: handleChangePage,
+                            pageSize: pageSize,
+                            hideOnSinglePage: true,
+                            current: paginationCurrent,
+                            showTotal: (totalNum, range) => <span>共有 <strong>{totalNum}</strong> 条记录</span>
+                        }}
+                        dataSource={data}
+                        renderItem={(item, index) => (
+                            <div key={index} className="Mobile_list">
+                                {(current === 'doctorManage' && isAdmin)
+                                ? doctorList(item)
+                                : medicalList(item, role, showReport, current, delfollows, follows)}
+                            </div>
+                        )}
+                    />
+                </div>}
             </div>
         )
     }

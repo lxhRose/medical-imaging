@@ -22,7 +22,8 @@ class Main extends React.PureComponent<Props, any> {
         super(props);
         this.state = {
             current: sessionStorage.getItem('current') || 'alipay',
-            showAddDoctorState: false
+            showAddDoctorState: false,
+            paginationCurrent: 1
         }
     }
 
@@ -57,6 +58,9 @@ class Main extends React.PureComponent<Props, any> {
             type: 'main/changePage', 
             payload: page
         });
+        this.setState({
+            paginationCurrent: page
+        });
         switch(this.state.current) {
             case 'alipay': this.loadList();break;
             case 'followedExams': this.followedExams();break;
@@ -78,19 +82,12 @@ class Main extends React.PureComponent<Props, any> {
         this.props.dispatch({
             type: 'main/clearData'
         });
-        this.setCurrent(e.key).then(() => {
+        sessionStorage.setItem('current', e.key);
+        this.setState({
+            current: e.key,
+            showAddDoctorState: false
+        }, () => { // 利用回调函数，保证在setState成功后执行以下函数
             this.handleChangePage(1);
-        });
-    }
-
-    setCurrent = (current):Promise<any> => {
-        return new Promise((resolve, reject) => {
-            this.setState({
-                current: current,
-                showAddDoctorState: false
-            });
-            sessionStorage.setItem('current', current);
-            resolve();
         });
     }
 
@@ -160,7 +157,8 @@ class Main extends React.PureComponent<Props, any> {
 
         const {
             current,
-            showAddDoctorState
+            showAddDoctorState,
+            paginationCurrent
         } = this.state;
 
         const option = {
@@ -172,6 +170,7 @@ class Main extends React.PureComponent<Props, any> {
             role,
             isAdmin,
             current,
+            paginationCurrent,
             showAddDoctorState,
             handleChangePage: this.handleChangePage.bind(this),
             handleChangePageSize: this.handleChangePageSize.bind(this),
