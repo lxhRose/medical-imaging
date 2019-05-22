@@ -57,7 +57,7 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const {mobile} = values;
-                const path = /^[1][3,4,5,7,8][0-9]{9}$/;
+                const path = /^[1][3,4,5,7,8,9][0-9]{9}$/;
                 const isVali = path.test(mobile);
                 if (isVali) {
                     this.setState({

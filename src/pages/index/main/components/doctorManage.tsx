@@ -55,7 +55,7 @@ class DoctorManage extends React.PureComponent<Props, any> {
     valiPhone = (e) => {
         const val = e.target.value;
         if (val) {
-            const path = /^[1][3,4,5,7,8][0-9]{9}$/;
+            const path = /^[1][3,4,5,7,8,9][0-9]{9}$/;
             const isVali = path.test(val);
             if (!isVali) {
                 this.props.form.setFields({
