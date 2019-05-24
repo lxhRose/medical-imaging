@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'dva/router';
 import { connect } from 'dva';
 import { RouteComponentProps } from 'react-router';
-import {TopMenu} from './../components/index';
+import {TopMenu, Footer} from './../components/index';
 import {message} from 'antd';
 import {Loading} from './../components/index';
 import isMobile from './../utils/isMobile';
@@ -49,6 +49,7 @@ class App extends React.PureComponent<Props & RouteComponentProps<any, any>, any
                 <TopMenu isMobile={isMobile}></TopMenu>
                 {this.props.children}
                 {isMobile && loading && <Loading text={text}></Loading>}
+                <Footer></Footer>
             </div>
         );
     }

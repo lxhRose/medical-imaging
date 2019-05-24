@@ -105,7 +105,7 @@ class Report extends React.PureComponent<Props, any> {
             <div className={isMobile ? "Mobile-Report-page" : "Report-page"}>
                 <div className="content">
                     <Row>
-                        {!isMobile && 
+                        {/* {!isMobile && 
                             <Col className="left-box">
                                 <div className="scroll">
                                     <div className="Search">
@@ -164,7 +164,7 @@ class Report extends React.PureComponent<Props, any> {
                                     </ul>
                                 </div>
                             </Col>
-                        }
+                        } */}
                         <Col className="center-box">
                             <div className="scroll">
                                 <div className="userInfo">
@@ -178,8 +178,8 @@ class Report extends React.PureComponent<Props, any> {
                                     </Row>
                                 </div>
                                 <div className="btn-group">
-                                    <Button type="default">查看申请</Button>
-                                    <Button type="primary">打开影像</Button>
+                                    {/* <Button type="default">查看申请</Button> */}
+                                    <a href={option.filmViewerUrl} target="_blank">打开影像</a>
                                 </div>
                                 <div className="textarea-wrap">
                                     <h4>影像所见</h4>
