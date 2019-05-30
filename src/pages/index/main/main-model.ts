@@ -7,7 +7,8 @@ import {
     fetchFollows,
     fetchDelfollows,
     fetchDoctors,
-    fetchLoadDoctors
+    fetchLoadDoctors,
+    fetcHaudit
 } from './main-server';
 
 const initialState = {
@@ -139,6 +140,44 @@ export default {
             });
         }
     },
+    *loadLog({ payload }, { call, put, select }) {
+        const  applyState = yield select(state => state.main);
+        const { pageNumber, pageSize } =  applyState;
+        const params = {
+            pageNumber,
+            pageSize,
+            ...payload,
+        };
+        yield put({
+            type: 'changeLoading',
+            payload: true,
+        });
+        yield put({
+            type: 'App/changeLoading',
+            payload: {
+                loading: true,
+                text: "加载中"
+            }
+        });
+        const response = yield call(fetcHaudit, params);
+        yield put({
+            type: 'changeLoading',
+            payload: false,
+        });
+        yield put({
+            type: 'App/changeLoading',
+            payload: {
+                loading: false,
+                text: ""
+            }
+        });
+        if (parseInt(response.meta.code) === 200) {
+            yield put({
+                type: 'appendListAuditLogs',
+                payload: response,
+            });
+        }
+    },
     *follows({ payload }, { call, put, select }) {
         const response = yield call(fetchFollows, payload);
         return response;
@@ -157,6 +196,13 @@ export default {
       return {
         ...state,
         data: payload.body.examDTOs,
+        totalRecord: payload.body.count,
+      };
+    },
+    appendListAuditLogs(state, { payload }) {
+      return {
+        ...state,
+        data: payload.body.auditLogs,
         totalRecord: payload.body.count,
       };
     },

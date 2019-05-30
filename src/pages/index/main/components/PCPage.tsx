@@ -1,8 +1,9 @@
 import React from 'react';
 import { withRouter } from 'dva/router';
 import { ColumnProps } from 'antd/lib/table';
-import { Table, Icon, Button} from 'antd';
+import { Table, Icon, Button, Input, Checkbox} from 'antd';
 import DoctorManage from './doctorManage';
+import SearchComponents from './searchComponents/searchComponents';
 
 const {Column} = Table;
 
@@ -39,6 +40,25 @@ class PCPage extends React.PureComponent<Props, any> {
                     dataIndex: 'isAdmin',
                     title: '是否管理员',
                     render: (text, record, index) => { return <span>{record.isAdmin ? '是' : '否'}</span>}
+                }
+            ];
+        } else if(current === 'logSearch' && true) {
+            this.columns = [
+                {
+                    dataIndex: 'userId',
+                    title: '用户手机号'
+                }, {
+                    dataIndex: 'operationType',
+                    title: '操作类型',
+                }, {
+                    dataIndex: 'operationDetail',
+                    title: '操作明细',
+                },  {
+                    dataIndex: 'createTime',
+                    title: '创建时间',
+                }, {
+                    dataIndex: 'updateTime',
+                    title: '修改时间'
                 }
             ];
         } else {
@@ -108,6 +128,8 @@ class PCPage extends React.PureComponent<Props, any> {
                     && <Button type="primary"
                      className="addDoctor" 
                      onClick={showAddDoctor}>{showAddDoctorState?'医生列表':'添加医生'}</Button>}
+                {current === 'alipay' && role === 2
+                    && <SearchComponents/>}
                 {showAddDoctorState 
                 ? <div>{isAdmin && 
                     <div className='PC-doctorManage'>
@@ -139,7 +161,7 @@ class PCPage extends React.PureComponent<Props, any> {
                         `显示 ${range[0]} 到 ${range[1]}, 共有${totalNum} 条记录`,
                     }}>
                     {this.columns.map((column, i) => <Column {...column} key={i} align={"center"}/>)}
-                    {current !== 'doctorManage' &&
+                    {current !== 'doctorManage' && current !== 'logSearch' &&
                         <Column
                             title="操作"
                             dataIndex="action"

@@ -63,9 +63,12 @@ class MobilePage extends React.PureComponent<Props, any> {
                         dataSource={data}
                         renderItem={(item, index) => (
                             <div key={index} className="Mobile_list">
-                                {(current === 'doctorManage' && isAdmin)
-                                ? doctorList(item)
-                                : medicalList(item, role, showReport, current, delfollows, follows)}
+                                {current === 'doctorManage' && isAdmin 
+                                    && doctorList(item)}
+                                {current === 'logSearch' && true 
+                                    && logList(item)}
+                                {(current === 'alipay' || current === 'followedExams') 
+                                    && medicalList(item, role, showReport, current, delfollows, follows)}
                             </div>
                         )}
                     />
@@ -100,6 +103,31 @@ function doctorList(item) {
         <div className="row">
             <span>是否管理员</span>
             <span>{item.isAdmin ? '是' : '否'}</span>
+        </div>
+    </div>
+}
+
+function logList(item) {
+    return <div>
+        <div className="row">
+            <span>用户手机号</span>
+            <span>{item.userId}</span>
+        </div>
+        <div className="row">
+            <span>操作类型</span>
+            <span>{item.operationType}</span>
+        </div>
+        <div className="row">
+            <span>操作明细</span>
+            <span>{item.operationDetail}</span>
+        </div>
+        <div className="row">
+            <span>创建时间</span>
+            <span>{item.createTime}</span>
+        </div>
+        <div className="row">
+            <span>修改时间</span>
+            <span>{item.updateTime}</span>
         </div>
     </div>
 }

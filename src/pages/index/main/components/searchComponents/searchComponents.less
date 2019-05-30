@@ -1,0 +1,70 @@
+.searchBox {
+    position: absolute;
+    top: -40px;
+    right: 20px;
+
+    .search {
+        float: left;
+    }
+    .button {
+        float: left;
+        position: relative;
+        margin-left: 10px;
+        height: 40px;
+        line-height: 32px;
+        cursor: pointer;
+
+        .positionBox {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            z-index: 999;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            width: 300px;
+            height: auto;
+            background-color: #fff;
+
+            .inputWrap,
+            .CheckboxWrap {
+                margin-bottom: 20px;
+                
+                .label {
+                    display: inline-block;
+                    width: 70px;
+                }
+                .input,
+                .CheckboxGroup {
+                    width: calc(~"100% - 70px");
+                }
+            }
+
+            .CheckboxWrap {
+                overflow: hidden;
+                zoom: 1;
+                
+                .label {
+                    float: left;
+                    line-height: 32px;
+                }
+                
+                .CheckboxGroup {
+                    float: left;
+                    line-height: 32px;
+                }
+            }
+
+            .btn_wrap {
+                text-align: right;
+
+                button {
+                    border-radius: 20px;
+                }
+                button:last-child {
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+}

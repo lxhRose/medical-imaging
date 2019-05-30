@@ -39,3 +39,10 @@ export async function fetchLoadDoctors(params) {
         params
     });
 }
+
+export async function fetcHaudit(params) {
+    return request(`/screens/audit`, {
+        method: 'GET',
+        params
+    });
+}

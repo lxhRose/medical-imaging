@@ -51,6 +51,16 @@ class Main extends React.PureComponent<Props, any> {
             type: 'main/loadDoctors'
         });
     }
+    // 日志
+    loadLog = () => {
+        this.props.dispatch({
+            type: 'main/loadLog',
+            payload: {
+                startTime: '2019-05-30T00:00:00',
+                endTime:'2019-05-30T12:00:00'
+            }
+        });
+    }
 
     // 更改页码
     handleChangePage = (page: number) => {
@@ -65,6 +75,7 @@ class Main extends React.PureComponent<Props, any> {
             case 'alipay': this.loadList();break;
             case 'followedExams': this.followedExams();break;
             case 'doctorManage': this.loadDoctors();break;
+            case 'logSearch': this.loadLog();break;
             default: this.loadList();break;
         }
     };
@@ -200,6 +211,11 @@ class Main extends React.PureComponent<Props, any> {
                         {isAdmin &&
                             <Menu.Item key="doctorManage">
                                 <a>医生管理</a>
+                            </Menu.Item>
+                        }
+                        {true &&
+                            <Menu.Item key="logSearch">
+                                <a>审计日志查询</a>
                             </Menu.Item>
                         }
                     </Menu>
