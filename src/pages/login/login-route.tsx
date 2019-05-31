@@ -33,7 +33,6 @@ class LoginRoute extends React.PureComponent<Props, any> {
 
     render() {
         const {isMobile} = this.state;
-        console.log(isMobile)
 
         return(
             <div className="login-page">

@@ -41,9 +41,6 @@ class NormalLoginForm extends React.Component<Props & FormComponentProps, any> {
                 }).then((response) => {
                     if (parseInt(response.meta.code) === 200) {
                         sessionStorage.setItem(TOKEN, response.body.token);
-                        // this.props.dispatch({
-                        //     type: 'App/loginUserInfo'
-                        // });
                         const { history } = this.props;
                         history.replace(`/main`);
                     }

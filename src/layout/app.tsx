@@ -37,7 +37,7 @@ class App extends React.PureComponent<Props & RouteComponentProps<any, any>, any
 
     componentDidMount = () => {
         this.props.dispatch({
-            type: 'App/loginUserInfo'
+            type: 'App/loginAuthority'
         });
     }
 
@@ -47,7 +47,9 @@ class App extends React.PureComponent<Props & RouteComponentProps<any, any>, any
         return (
             <div className="App-page">
                 <TopMenu isMobile={isMobile}></TopMenu>
-                {this.props.children}
+                <div className="content">
+                    {this.props.children}
+                </div>
                 {isMobile && loading && <Loading text={text}></Loading>}
                 <Footer></Footer>
             </div>

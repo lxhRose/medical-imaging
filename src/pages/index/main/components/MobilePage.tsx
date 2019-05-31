@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'dva/router';
 import { Icon, List, Button, Pagination } from 'antd';
 import DoctorManage from './doctorManage';
+import SearchComponents from './searchComponents/searchComponents';
 
 interface Props {
     option: any,
@@ -17,10 +18,9 @@ class MobilePage extends React.PureComponent<Props, any> {
             data,
             pageSize,
             totalRecord,
-            role,
+            roleArr,
             current,
             paginationCurrent,
-            isAdmin,
             showAddDoctorState,
             handleChangePage,
             showReport,
@@ -31,11 +31,13 @@ class MobilePage extends React.PureComponent<Props, any> {
 
         return(
             <div className="Mobile-page">
-                {current === 'doctorManage' && isAdmin
+                {current === 'doctorManage' && roleArr.includes(3)
                 && <Button className="addDoctor"
                         onClick={showAddDoctor}>{showAddDoctorState?'医生列表':'添加医生'}</Button>}
+                {current === 'alipay' && (roleArr.includes(2) || roleArr.includes(1))
+                    && <SearchComponents/>}
                 {showAddDoctorState 
-                ? <div>{isAdmin && 
+                ? <div>{roleArr.includes(3) && 
                     <div className='Mobile-doctorManage'>
                         <DoctorManage/>
                     </div>}
@@ -63,12 +65,13 @@ class MobilePage extends React.PureComponent<Props, any> {
                         dataSource={data}
                         renderItem={(item, index) => (
                             <div key={index} className="Mobile_list">
-                                {current === 'doctorManage' && isAdmin 
+                                {current === 'doctorManage' && roleArr.includes(3) 
                                     && doctorList(item)}
-                                {current === 'logSearch' && true 
+                                {current === 'logSearch' && roleArr.includes(4) 
                                     && logList(item)}
                                 {(current === 'alipay' || current === 'followedExams') 
-                                    && medicalList(item, role, showReport, current, delfollows, follows)}
+                                    && (roleArr.includes(1) || roleArr.includes(2))
+                                    && medicalList(item, roleArr, showReport, current, delfollows, follows)}
                             </div>
                         )}
                     />
@@ -132,18 +135,18 @@ function logList(item) {
     </div>
 }
 
-function medicalList(item, role, showReport, current, delfollows, follows) {
+function medicalList(item, roleArr, showReport, current, delfollows, follows) {
     return <div>
         <div className="row">
             <span>ID号</span>
             <span>{item.hospExamDisplayId}</span>
         </div>
-        {role === 2 &&
+        {roleArr.includes(2) &&
             <div className="row">
                 <span>姓名</span>
                 <span>{item.patientName}</span>
             </div>}
-        {role === 2 &&
+        {roleArr.includes(2) &&
             <div className="row">
                 <span>性别</span>
                 <span>{item.patientSex}</span>
@@ -175,7 +178,7 @@ function medicalList(item, role, showReport, current, delfollows, follows) {
                     <a href={item.filmViewerUrl} target="_blank"><Icon type="picture" />影像</a>
                     <a onClick={() => showReport(item)}>
                         <Icon type="medicine-box" />报告</a>
-                    {role === 2  ? (current === 'followedExams'
+                    {roleArr.includes(2)  ? (current === 'followedExams'
                         ? <a onClick={() => delfollows(item)}>
                             <Icon 
                                 type="star" 

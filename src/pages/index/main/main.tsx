@@ -21,7 +21,7 @@ class Main extends React.PureComponent<Props, any> {
     constructor(props) {
         super(props);
         this.state = {
-            current: sessionStorage.getItem('current') || 'alipay',
+            current: 'alipay',
             showAddDoctorState: false,
             paginationCurrent: 1
         }
@@ -151,6 +151,20 @@ class Main extends React.PureComponent<Props, any> {
         });
     }
 
+    changeSelectedKey = (roleArr) => {
+        let selectedKey = '';
+        if (roleArr.includes(1) || roleArr.includes(2)) {
+            selectedKey = 'alipay';
+        } else if(roleArr.includes(3)) {
+            selectedKey = 'doctorManage';
+        } else if (roleArr.includes(4)) {
+            selectedKey = 'logSearch';
+        }
+        this.setState({
+            current: sessionStorage.getItem('current') || selectedKey,
+        })
+    }
+
     render() {
         const {
             loading,
@@ -162,8 +176,7 @@ class Main extends React.PureComponent<Props, any> {
 
         const {
             isMobile,
-            role,
-            isAdmin
+            roleArr,
         } = this.props.App;
 
         const {
@@ -178,8 +191,7 @@ class Main extends React.PureComponent<Props, any> {
             pageNumber,
             pageSize,
             totalRecord,
-            role,
-            isAdmin,
+            roleArr,
             current,
             paginationCurrent,
             showAddDoctorState,
@@ -191,6 +203,8 @@ class Main extends React.PureComponent<Props, any> {
             follows: this.follows.bind(this)
         }
 
+        this.changeSelectedKey(roleArr);
+
         return(
             <div className="main-page">
                 <div className="content">
@@ -200,20 +214,22 @@ class Main extends React.PureComponent<Props, any> {
                         mode="horizontal"
                         className={isMobile ? 'Mobile-Menu' : 'PC-Menu'}
                     >
-                        <Menu.Item key="alipay">
-                            <a>全部影像</a>
-                        </Menu.Item>
-                        {role === 2 &&
+                        {(roleArr.includes(1) || roleArr.includes(2)) &&
+                            <Menu.Item key="alipay">
+                                <a>全部影像</a>
+                            </Menu.Item>
+                        }
+                        {roleArr.includes(2) &&
                             <Menu.Item key="followedExams">
                                 <a>我的关注</a>
                             </Menu.Item>
                         }
-                        {isAdmin &&
+                        {roleArr.includes(3) &&
                             <Menu.Item key="doctorManage">
                                 <a>医生管理</a>
                             </Menu.Item>
                         }
-                        {true &&
+                        {roleArr.includes(4) &&
                             <Menu.Item key="logSearch">
                                 <a>审计日志查询</a>
                             </Menu.Item>

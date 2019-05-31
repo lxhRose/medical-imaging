@@ -17,9 +17,9 @@ class PCPage extends React.PureComponent<Props, any> {
         super(props);
     }
 
-    createdColumns = (role, current, isAdmin) => {
+    createdColumns = (roleArr, current) => {
         this.columns = [];
-        if (current === 'doctorManage' && isAdmin) {
+        if (current === 'doctorManage' && roleArr.includes(3)) {
             this.columns = [
                 {
                     dataIndex: 'name',
@@ -42,7 +42,7 @@ class PCPage extends React.PureComponent<Props, any> {
                     render: (text, record, index) => { return <span>{record.isAdmin ? '是' : '否'}</span>}
                 }
             ];
-        } else if(current === 'logSearch' && true) {
+        } else if(current === 'logSearch' &&  roleArr.includes(4)) {
             this.columns = [
                 {
                     dataIndex: 'userId',
@@ -61,7 +61,7 @@ class PCPage extends React.PureComponent<Props, any> {
                     title: '修改时间'
                 }
             ];
-        } else {
+        } else if (roleArr.includes(1) || roleArr.includes(2)) {
             let arr = [
                 {
                     dataIndex: 'hospExamDisplayId',
@@ -91,7 +91,7 @@ class PCPage extends React.PureComponent<Props, any> {
                 }
             ];
             arr.map((item) => {
-                if (role === 2) {
+                if ( roleArr.includes(2)) {
                     this.columns.push(item);
                 } else {
                     if (item.dataIndex !== 'patientName' && item.dataIndex !== 'patientSex') {
@@ -107,8 +107,7 @@ class PCPage extends React.PureComponent<Props, any> {
             data,
             pageSize,
             totalRecord,
-            role,
-            isAdmin,
+            roleArr,
             current,
             loading,
             pageNumber,
@@ -120,18 +119,18 @@ class PCPage extends React.PureComponent<Props, any> {
             follows,
             showAddDoctor
         } = this.props.option;
-        this.createdColumns(role, current, isAdmin);
+        this.createdColumns(roleArr, current);
 
         return(
             <div className="PC-page">
-                {current === 'doctorManage' && isAdmin
+                {current === 'doctorManage' && roleArr.includes(3)
                     && <Button type="primary"
                      className="addDoctor" 
                      onClick={showAddDoctor}>{showAddDoctorState?'医生列表':'添加医生'}</Button>}
-                {current === 'alipay' && role === 2
+                {current === 'alipay' && (roleArr.includes(2) || roleArr.includes(1))
                     && <SearchComponents/>}
                 {showAddDoctorState 
-                ? <div>{isAdmin && 
+                ? <div>{roleArr.includes(3) && 
                     <div className='PC-doctorManage'>
                         <DoctorManage/>
                     </div>}
@@ -161,7 +160,7 @@ class PCPage extends React.PureComponent<Props, any> {
                         `显示 ${range[0]} 到 ${range[1]}, 共有${totalNum} 条记录`,
                     }}>
                     {this.columns.map((column, i) => <Column {...column} key={i} align={"center"}/>)}
-                    {current !== 'doctorManage' && current !== 'logSearch' &&
+                    {(roleArr.includes(2) || roleArr.includes(1)) && current !== 'doctorManage' && current !== 'logSearch' && 
                         <Column
                             title="操作"
                             dataIndex="action"
@@ -172,7 +171,7 @@ class PCPage extends React.PureComponent<Props, any> {
                                     <a href={record.filmViewerUrl} target="_blank"><Icon type="picture" />影像</a>
                                     <a onClick={() => showReport(record)}>
                                         <Icon type="medicine-box" />报告</a>
-                                    {role === 2  ? (current === 'followedExams'
+                                    {roleArr.includes(2)  ? (current === 'followedExams'
                                         ? <a onClick={() => delfollows(record)}>
                                             <Icon 
                                                 type="star" 

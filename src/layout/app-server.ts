@@ -6,3 +6,9 @@ export async function fetchLoginUserInfo() {
     method: 'GET',
   });
 }
+
+export async function fetchLoginAuthority() {
+  return request('/screens/login/authority', {
+    method: 'GET',
+  });
+}
